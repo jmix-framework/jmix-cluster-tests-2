@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-app
+  namespace: jmix-cluster-tests
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sample-app
+  template:
+    metadata:
+      labels:
+        app: sample-app
+    spec:
+      containers:
+        - image: docker.haulmont.com/platform/jmix-kube-tests/sample-cluster
+          imagePullPolicy: Always
+          name: sample-app
+          env:
+            - name: DB_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: sample-db-config
+                  key: db_user
+            - name: DB_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: sample-db-config
+                  key: db_password
+            - name: DB_HOST
+              value: sample-db-service
+            - name: DB_NAME
+              value: sample
+            - name: SPRING_PROFILES_ACTIVE
+              value: k8s
+            - name: HZ_NETWORK_JOIN_KUBERNETES_ENABLED
+              value: "true"
+            - name: BPL_DEBUG_ENABLED
+              value: "true"
+            - name: BPL_DEBUG_PORT
+              value: "5006"
+            - name: JAVA_OPTS
+              value: "-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.local.only=false -Djava.rmi.server.hostname=127.0.0.1"
+          lifecycle:
+            preStop:
+              exec:
+                command: [ "sh", "-c", "sleep 10" ]
+          ports:
+            # todo make sure hazelcast is first (lexicographically too) because of https://github.com/hazelcast/hazelcast/issues/24688, revert when fix will be released
+            - name: hazelcast
+              containerPort: 5701
+            - name: web-ui
+              containerPort: 8080
+            - name: sample-app-jmx
+              containerPort: 9875
+              protocol: TCP
+      imagePullSecrets:
+        - name: kubetestcred
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sample-app-service
+  namespace: jmix-cluster-tests
+spec:
+  type: NodePort
+  ports:
+    - port: 5701
+      name: hazelcast
+    - port: 8080
+      name: sample-app-app
+    - port: 9875
+      targetPort: sample-app-jmx
+      protocol: TCP
+      name: jmxconn
+  selector:
+    app: sample-app
