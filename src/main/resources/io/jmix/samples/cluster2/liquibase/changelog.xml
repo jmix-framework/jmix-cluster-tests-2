@@ -15,10 +15,9 @@
 
     <include file="/io/jmix/securitydata/liquibase/changelog.xml"/>
     <!--<include file="/io/jmix/notifications/liquibase/changelog.xml"/>--><!--todo notifications-->
-    <!--<include file="/io/jmix/dynattr/liquibase/changelog.xml"/>--><!--todo dynattr-->
+    <include file="/io/jmix/dynattr/liquibase/changelog.xml"/>
     <include file="/io/jmix/audit/liquibase/changelog.xml"/>
     <include file="/io/jmix/email/liquibase/changelog.xml"/>
-    <!--<include file="/com/haulmont/cuba/liquibase/changelog.xml"/>--><!--todo remove-->
 
     <includeAll path="/io/jmix/samples/cluster2/liquibase/changelog"/>
 

@@ -12,6 +12,7 @@ import io.jmix.samples.cluster2.test_system.model.step.ControlStep;
 import io.jmix.samples.cluster2.test_system.model.step.PodStep;
 import io.jmix.samples.cluster2.test_system.model.step.TestStep;
 import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.slf4j.Logger;

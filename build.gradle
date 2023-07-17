@@ -39,7 +39,7 @@ dependencies {
     implementation 'io.jmix.flowui:jmix-flowui-themes'
     implementation 'io.jmix.datatools:jmix-datatools-starter'
     implementation 'io.jmix.datatools:jmix-datatools-flowui-starter'
-    //implementation 'io.jmix.notifications:jmix-notifications-starter'//todo later or without ui
+    //implementation 'io.jmix.notifications:jmix-notifications-starter'//todo notifications
     //implementation 'io.jmix.notifications:jmix-notifications-flowui-starter'
 
     implementation 'io.jmix.audit:jmix-audit-starter'
@@ -59,15 +59,14 @@ dependencies {
         }
     }
 
-    runtimeOnly 'org.hsqldb:hsqldb'
     implementation("org.postgresql:postgresql")//todo
 
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
 
-    //implementation("io.jmix.dynattr:jmix-dynattr-starter")
-    //implementation("io.jmix.dynattr:jmix-dynattr-ui-starter")
+    implementation("io.jmix.dynattr:jmix-dynattr-starter")
+    //implementation("io.jmix.dynattr:jmix-dynattr-ui-starter")//todo dynattr-flowui
     testImplementation 'io.jmix.flowui:jmix-flowui-test-assist'
 
     implementation 'org.glassfish.main.external:jmxremote_optional-repackaged:5.0'
@@ -88,4 +87,8 @@ test {
 bootBuildImage {
     println "Jmix verison: ${project.hasProperty("jmixVersion") ? jmixVersion : defaultJmixVersion + ' (default)'}"
     imageName = 'docker.haulmont.com/platform/jmix-kube-tests/sample-cluster'
+}
+
+vaadin {
+    productionMode = true
 }
