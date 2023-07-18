@@ -6,4 +6,4 @@ hazelcast:
       kubernetes:
         enabled: false
         service-name: sample-app-service
-        namespace: jmix2-cluster-tests
+        namespace: jmix-cluster-tests

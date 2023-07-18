@@ -12,8 +12,8 @@ minikube dashboard > /dev/null 2>&1 &
 #todo clear and apply configs not needed in case of minikube delete invoked
 echo 'Clearing deployment configs...'
 kubectl delete -f ./k8s
-#kubectl delete namespace jmix2-cluster-tests
-kubectl create namespace jmix2-cluster-tests
+#kubectl delete namespace jmix-cluster-tests
+kubectl create namespace jmix-cluster-tests
 echo 'Building app image...'
 ./gradlew bootBuildImage
 echo 'Pushing image to gitlab repository'

@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface K8sControlTool extends AutoCloseable {
     String ENV_KUBECONFIG_CONTENT = "KUBECONFIG_CONTENT";
-    String NAMESPACE = "jmix2-cluster-tests";
+    String NAMESPACE = "jmix-cluster-tests";
     String APP_NAME = "sample-app";
     String POD_LABEL_SELECTOR = "app=" + APP_NAME;
     String POD_STATUS_SELECTOR = "status.phase=Running";

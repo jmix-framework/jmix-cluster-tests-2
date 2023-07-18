@@ -2,7 +2,7 @@
 #kind: Deployment
 #metadata:
 #  name: dnsutils-app
-#  namespace: jmix2-cluster-tests
+#  namespace: jmix-cluster-tests
 #spec:
 #  replicas: 0
 #  selector:
