@@ -17,9 +17,9 @@ kubectl create namespace jmix-cluster-tests
 echo 'Building app image...'
 ./gradlew bootBuildImage
 echo 'Pushing image to gitlab repository'
-docker push docker.haulmont.com/platform/jmix-kube-tests/sample-cluster
+docker push docker.haulmont.com/platform/jmix-kube-tests/sample-cluster:jmix_2_0
 echo 'Loading image...'
-minikube image load docker.haulmont.com/platform/jmix-kube-tests/sample-cluster:latest
+minikube image load docker.haulmont.com/platform/jmix-kube-tests/sample-cluster:jmix_2_0
 echo 'Applying configs...'
 kubectl apply -f ./k8s
 echo 'Done!'

@@ -86,7 +86,7 @@ test {
 
 bootBuildImage {
     println "Jmix verison: ${project.hasProperty("jmixVersion") ? jmixVersion : defaultJmixVersion + ' (default)'}"
-    imageName = 'docker.haulmont.com/platform/jmix-kube-tests/sample-cluster'
+    imageName = 'docker.haulmont.com/platform/jmix-kube-tests/sample-cluster:jmix_2_0'
 }
 
 vaadin {
