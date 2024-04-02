@@ -2,9 +2,9 @@ package io.jmix.samples.cluster2.tests.jmixcaches;
 
 import io.jmix.core.DataManager;
 import io.jmix.core.Metadata;
-import io.jmix.core.pessimisticlocking.LockInfo;
-import io.jmix.core.pessimisticlocking.LockManager;
 import io.jmix.core.security.SystemAuthenticator;
+import io.jmix.pessimisticlock.LockManager;
+import io.jmix.pessimisticlock.entity.LockInfo;
 import io.jmix.samples.cluster2.entity.Sample;
 import io.jmix.samples.cluster2.test_system.model.TestContext;
 import io.jmix.samples.cluster2.test_system.model.annotations.AddNode;

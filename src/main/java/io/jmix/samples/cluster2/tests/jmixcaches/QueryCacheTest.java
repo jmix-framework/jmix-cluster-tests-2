@@ -12,6 +12,8 @@ import io.jmix.samples.cluster2.test_system.model.annotations.AfterTest;
 import io.jmix.samples.cluster2.test_system.model.annotations.BeforeTest;
 import io.jmix.samples.cluster2.test_system.model.annotations.ClusterTest;
 import io.jmix.samples.cluster2.test_system.model.annotations.Step;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,14 +26,17 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Component("cluster_QueryCacheTest")
-@ClusterTest(description = "Checks query cache works correctly in cluster")
+@ClusterTest(description = "Checks query cache works correctly in cluster", cleanStart = true)
 public class QueryCacheTest implements InitializingBean {
     public static final String QUERY = "select s from cluster_Sample s where s.name=:name";
 
     @Autowired
     private UnconstrainedDataManager dataManager;
+    @PersistenceContext
+    private EntityManager entityManager;
 
     private SynchronizedListAppender appender;
+
 
     @Autowired
     private DataSource dataSource;
@@ -51,6 +56,7 @@ public class QueryCacheTest implements InitializingBean {
 
     @Step(order = 0, nodes = "1")
     public void checkOriginNode(TestContext context) {
+        appender.start();
 
         Sample entity = dataManager.create(Sample.class);
         entity.setName("one");
@@ -91,6 +97,12 @@ public class QueryCacheTest implements InitializingBean {
 
     @Step(order = 2, nodes = "1")
     public void checkCacheResetAfterUpdate(TestContext context) {
+        try {//bad practice, but we have to await for invalidate message from (2) node to be delivered and processed by (1) node.
+            // Otherwise, sometimes it will arrive later and break the test
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         appender.clear();
         Sample entity = ((Sample) context.get("entity"));
         List<Sample> reloaded = dataManager.load(Sample.class)
@@ -119,6 +131,7 @@ public class QueryCacheTest implements InitializingBean {
     public void clean() {
         appender.clear();
         queryCache.invalidateAll();
+        entityManager.getEntityManagerFactory().getCache().evictAll();
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         jdbcTemplate.update("delete from CLUSTER_SAMPLE");
     }
