@@ -1,6 +1,5 @@
 plugins {
-    //id 'io.jmix' version '2.1.0-RC1'
-    id 'io.jmix' version '2.1.3'//todo 2.1.3 - last working version. 2.2.0+ breaks bootBuildImage task for podman
+    id 'io.jmix' version '2.5.0'
     id 'java'
 }
 
@@ -73,8 +72,8 @@ dependencies {
 
     implementation 'org.glassfish.main.external:jmxremote_optional-repackaged:5.0'
 
-    implementation 'io.kubernetes:client-java:15.0.1'
-    implementation 'io.kubernetes:client-java-api-fluent:15.0.1'
+    //implementation 'io.kubernetes:client-java:15.0.1'
+    //implementation 'io.kubernetes:client-java-api-fluent:15.0.1'
     implementation 'io.fabric8:kubernetes-client:6.0.0'//todo runtime
     implementation 'io.fabric8:kubernetes-client-api:6.0.0'//todo compile
 

@@ -2,13 +2,13 @@ package io.jmix.samples.cluster2.tests.jmixcaches;
 
 import io.jmix.core.Metadata;
 import io.jmix.core.UnconstrainedDataManager;
-import io.jmix.data.entity.ReferenceToEntity;
 import io.jmix.dynattr.AttributeDefinition;
 import io.jmix.dynattr.AttributeType;
 import io.jmix.dynattr.CategoryDefinition;
 import io.jmix.dynattr.DynAttrMetadata;
 import io.jmix.dynattr.model.Category;
 import io.jmix.dynattr.model.CategoryAttribute;
+import io.jmix.dynattr.model.ReferenceToEntity;
 import io.jmix.samples.cluster2.entity.Sample;
 import io.jmix.samples.cluster2.test_system.model.TestContext;
 import io.jmix.samples.cluster2.test_system.model.annotations.AfterTest;
