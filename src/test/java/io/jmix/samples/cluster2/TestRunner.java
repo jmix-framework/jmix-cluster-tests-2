@@ -174,7 +174,7 @@ public class TestRunner {//todo move cluster tests to separate test in order to 
                 portsByNames.put(name, bridge.getJmxPort());
                 testContext.registerNode(name, bridge.getNodeIp(), bridge.getJmxPort());
             }
-            log.info("Jmix ports mapped:{}", portsByNames);
+            log.info("JMX ports mapped:{}", portsByNames);
 
 
             log.info("Executing before test action...");
