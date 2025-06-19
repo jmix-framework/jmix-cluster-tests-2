@@ -29,3 +29,10 @@ vite.generated.ts
 webpack.generated.js
 
 .DS_Store
+/package.json
+/src/main/bundles/*
+/jmix-studio.xml
+/package-lock.json
+/tsconfig.json
+/types.d.ts
+/vite.config.ts
