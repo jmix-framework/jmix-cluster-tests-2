@@ -113,14 +113,12 @@ public class ClusterTestManagementFacade implements BeanPostProcessor, Initializ
             @ManagedOperationParameter(name = "beanName", description = "Name of the bean containing test"),
             @ManagedOperationParameter(name = "context", description = "Test context to store objects between test")
     })
-    public TestResult runBeforeTestAction(String beanName, @Nullable TestContext context) {
+    public TestResult runBeforeTestAction(String beanName, TestContext context) {
         TestResult result = new TestResult();
         ClusterTestImpl impl = testsByNames.get(beanName);//todo deal with code duplication
         appender.start();
-        if (context == null)
-            context = new TestContext();
         try {
-            if (impl.getBeforeTest() != null) {//todo! check on runner!
+            if (impl.getBeforeTest() != null) {
                 impl.getBeforeTest().doAction(context);
             } else {
                 log.info("No BeforeTest action found for test '{}'", beanName);

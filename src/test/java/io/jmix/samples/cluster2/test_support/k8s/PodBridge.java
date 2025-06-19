@@ -5,11 +5,12 @@ import javax.annotation.Nullable;
 public interface PodBridge {
     String getName();
 
-    String getPort();
+    String getJmxPort();
 
     @Nullable
     String getDebugPort();
 
+    String getNodeIp();
     /**
      * Closes port-forwarding connections and frees related resources
      */

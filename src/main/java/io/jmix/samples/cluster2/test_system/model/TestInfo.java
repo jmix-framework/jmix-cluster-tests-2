@@ -4,10 +4,13 @@ import io.jmix.samples.cluster2.test_system.model.annotations.ClusterTest;
 import io.jmix.samples.cluster2.test_system.model.step.PodStep;
 import io.jmix.samples.cluster2.test_system.model.step.TestStep;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.*;
 
 public class TestInfo implements Serializable {//todo immutability
+
+    @Serial
     private static final long serialVersionUID = -8002207034814424879L;
 
     //todo group to resources

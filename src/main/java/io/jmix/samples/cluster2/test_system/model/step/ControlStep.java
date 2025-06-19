@@ -1,12 +1,15 @@
 package io.jmix.samples.cluster2.test_system.model.step;
 
 import javax.annotation.Nullable;
+import java.io.Serial;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-//todo javadocs here and in another places too
+
 public class ControlStep extends AbstractTestStep {
+
+    @Serial
     private static final long serialVersionUID = 7023310829995649007L;
 
     public enum Operation {

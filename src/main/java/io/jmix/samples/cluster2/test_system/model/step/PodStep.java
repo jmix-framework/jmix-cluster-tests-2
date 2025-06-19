@@ -1,10 +1,13 @@
 package io.jmix.samples.cluster2.test_system.model.step;
 
+import java.io.Serial;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 public class PodStep extends AbstractTestStep {
+
+    @Serial
     private static final long serialVersionUID = -7068551058455006687L;
     private List<String> nodes;
 

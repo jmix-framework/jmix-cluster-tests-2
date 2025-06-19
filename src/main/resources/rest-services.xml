@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services xmlns="http://jmix.io/schema/rest/services">
+    <service name="cluster_SessionInfoBean">
+        <method name="getSessions"/>
+        <method name="setSessionDataAttribute">
+            <param name="name"/>
+            <param name="value"/>
+        </method>
+        <method name="getSessionDataAttribute">
+            <param name="name"/>
+        </method>
+        <method name="getSessionId"/>
+    </service>
+</services>

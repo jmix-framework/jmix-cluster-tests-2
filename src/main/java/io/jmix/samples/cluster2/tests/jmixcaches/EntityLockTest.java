@@ -22,6 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ClusterTest(initNodes = {"1", "2"}, description = "Checks entity lock cluster propagation")
 public class EntityLockTest {
     public static final String ENTITY_INSTANCE_NAME = "LockTestEntity";
+    public static final String ENTITY = "entity";
 
     @Autowired
     Metadata metadata;
@@ -75,10 +76,10 @@ public class EntityLockTest {
     }
 
     @Step(order = 2, nodes = "2")
-    public boolean lockEntity(TestContext context) {//todo @Authenticated
+    public boolean lockEntity(TestContext context) {
         authenticator.begin();
         try {
-            Sample entity = (Sample) context.get("entity");
+            Sample entity = (Sample) context.get(ENTITY);
 
             LockInfo lockInfo = lockManager.lock(entity);
 
@@ -94,7 +95,7 @@ public class EntityLockTest {
     public boolean checkEntityLocked(TestContext context) {
         authenticator.begin();
         try {
-            Sample entity = (Sample) context.get("entity");
+            Sample entity = (Sample) context.get(ENTITY);
 
             LockInfo lockInfo = lockManager.lock(entity);
 
@@ -111,7 +112,7 @@ public class EntityLockTest {
     public boolean checkEntityLockedOnNewNodeAndUnlock(TestContext context) {
         authenticator.begin();
         try {
-            Sample entity = (Sample) context.get("entity");
+            Sample entity = (Sample) context.get(ENTITY);
 
             LockInfo lockInfo = lockManager.lock(entity);
 
@@ -131,11 +132,7 @@ public class EntityLockTest {
     public boolean checkEntityUnlocked(TestContext context) {
         authenticator.begin();
         try {
-            Sample entity = dataManager.load(Sample.class)//todo use context!!
-                    .query("select e from cluster_Sample e where e.name = :name")
-                    .parameter("name", ENTITY_INSTANCE_NAME)
-                    .one();
-
+            Sample entity = (Sample) context.get(ENTITY);
             lockManager.unlock(entity);
             LockInfo lockInfo = lockManager.getLockInfo("cluster_Sample", entity.getId().toString());
 

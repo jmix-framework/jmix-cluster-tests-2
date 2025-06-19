@@ -35,7 +35,7 @@ public class CliPodBridge implements PodBridge {
     }
 
     @Override
-    public String getPort() {
+    public String getJmxPort() {
         return port;
     }
 
@@ -55,6 +55,11 @@ public class CliPodBridge implements PodBridge {
     @Nullable
     public String getDebugPort() {
         return debugPort;
+    }
+
+    @Override
+    public String getNodeIp() {
+        return "";//todo remove OfficialK8sControlTool and realted classes
     }
 
     public static CliPodBridge establish(String podName, String localPort, String targetPort) {

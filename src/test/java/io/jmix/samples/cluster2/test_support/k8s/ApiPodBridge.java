@@ -1,9 +1,9 @@
 package io.jmix.samples.cluster2.test_support.k8s;
 
 import io.fabric8.kubernetes.client.LocalPortForward;
-import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.lang.Nullable;
 
 import java.io.IOException;
 
@@ -11,19 +11,24 @@ public class ApiPodBridge implements PodBridge {
     private static final Logger log = LoggerFactory.getLogger(ApiPodBridge.class);
 
     private final String name;
-    private final String port;
+    private final String jmxPort;
     private final String debugPort;
+    private final String nodeIp;
 
     private final LocalPortForward portForward;
     private final LocalPortForward debugPortForward;
 
 
-    public ApiPodBridge(String name, LocalPortForward portForward, @Nullable LocalPortForward debugPortForward) {
+    public ApiPodBridge(String name,
+                        String nodeIp,
+                        LocalPortForward jmxPortForward,
+                        @Nullable LocalPortForward debugPortForward) {
         this.name = name;
-        this.portForward = portForward;
+        this.portForward = jmxPortForward;
         this.debugPortForward = debugPortForward;
-        port = Integer.toString(portForward.getLocalPort());
+        jmxPort = Integer.toString(jmxPortForward.getLocalPort());
         debugPort = debugPortForward != null ? Integer.toString(debugPortForward.getLocalPort()) : null;
+        this.nodeIp = nodeIp;
     }
 
     @Override
@@ -32,8 +37,8 @@ public class ApiPodBridge implements PodBridge {
     }
 
     @Override
-    public String getPort() {
-        return port;
+    public String getJmxPort() {
+        return jmxPort;
     }
 
     @Nullable
@@ -42,7 +47,13 @@ public class ApiPodBridge implements PodBridge {
         return debugPort;
     }
 
-    public void destroy() {//todo!!!
+
+    @Override
+    public String getNodeIp() {
+        return nodeIp;
+    }
+
+    public void destroy() {
 
         try {
             portForward.close();
@@ -58,8 +69,9 @@ public class ApiPodBridge implements PodBridge {
     public String toString() {
         return "PodBridge{" +
                 "pod='" + name + '\'' +
-                ", port='" + port + '\'' +
+                ", port='" + jmxPort + '\'' +
                 ", debugPort='" + debugPort + '\'' +
+                ", nodeIp='" + nodeIp + '\'' +
                 '}';
     }
 }

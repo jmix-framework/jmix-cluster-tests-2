@@ -1,9 +1,11 @@
 package io.jmix.samples.cluster2.test_system.model;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
 public class TestResult implements Serializable {
+    @Serial
     private static final long serialVersionUID = -3105884104042261255L;
     private List<String> logs;
     private Throwable exception;
