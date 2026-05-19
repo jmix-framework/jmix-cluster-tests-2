@@ -1,6 +1,6 @@
 package io.jmix.samples.cluster2.test_system.model.step;
 
-import javax.annotation.Nullable;
+import org.springframework.lang.Nullable;
 import java.io.Serial;
 import java.util.Arrays;
 import java.util.List;

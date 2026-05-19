@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
-public class TestRunner {//todo move cluster tests to separate test in order to run without cl parameter
+public class TestRunner {
     public static final String TEST_SIZE_ATTRIBUTE = "Size";
     public static final String READY_ATTRIBUTE = "Ready";
 

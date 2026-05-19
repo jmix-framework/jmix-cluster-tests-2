@@ -1,17 +1,19 @@
 package io.jmix.samples.cluster2;
 
+import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.component.page.Push;
 import com.vaadin.flow.server.PWA;
-import com.vaadin.flow.theme.Theme;
+import com.vaadin.flow.theme.aura.Aura;
+import io.jmix.flowui.theme.aura.JmixAura;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.info.BuildProperties;
+import org.springframework.boot.jdbc.autoconfigure.DataSourceProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.event.EventListener;
@@ -24,8 +26,10 @@ import java.time.ZonedDateTime;
 import java.util.TimeZone;
 
 @Push
-@Theme(value = "sample-cluster-2")
-@PWA(name = "Sample Cluster 2", shortName = "Sample Cluster 2")
+@StyleSheet(Aura.STYLESHEET)
+@StyleSheet(JmixAura.STYLESHEET)
+@StyleSheet("themes/sample-cluster-2-aura/styles.css")
+@PWA(name = "Sample Cluster 2", shortName = "Sample Cluster 2", offline = false)
 @SpringBootApplication
 public class SampleCluster2Application implements AppShellConfigurator {
 

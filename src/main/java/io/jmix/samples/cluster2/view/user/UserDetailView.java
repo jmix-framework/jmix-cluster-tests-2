@@ -1,13 +1,16 @@
 package io.jmix.samples.cluster2.view.user;
 
-import io.jmix.samples.cluster2.entity.User;
-import io.jmix.samples.cluster2.view.main.MainView;
 import com.vaadin.flow.component.combobox.ComboBox;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.router.Route;
 import io.jmix.core.EntityStates;
+import io.jmix.flowui.Notifications;
 import io.jmix.flowui.component.textfield.TypedTextField;
 import io.jmix.flowui.view.*;
+import io.jmix.samples.cluster2.entity.User;
+import io.jmix.samples.cluster2.view.main.MainView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -16,8 +19,8 @@ import java.util.Objects;
 import java.util.TimeZone;
 
 @Route(value = "users/:id", layout = MainView.class)
-@ViewController("User.detail")
-@ViewDescriptor("user-detail-view.xml")
+@ViewController(id = "User.detail")
+@ViewDescriptor(path = "user-detail-view.xml")
 @EditedEntityContainer("userDc")
 public class UserDetailView extends StandardDetailView<User> {
 
@@ -29,13 +32,17 @@ public class UserDetailView extends StandardDetailView<User> {
     private PasswordField confirmPasswordField;
     @ViewComponent
     private ComboBox<String> timeZoneField;
+    @ViewComponent
+    private MessageBundle messageBundle;
+    @Autowired
+    private Notifications notifications;
 
     @Autowired
     private EntityStates entityStates;
     @Autowired
-    private MessageBundle messageBundle;
-    @Autowired
     private PasswordEncoder passwordEncoder;
+
+    private boolean newEntity;
 
     @Subscribe
     public void onInit(final InitEvent event) {
@@ -65,9 +72,23 @@ public class UserDetailView extends StandardDetailView<User> {
     }
 
     @Subscribe
-    protected void onBeforeSave(final BeforeSaveEvent event) {
+    public void onBeforeSave(final BeforeSaveEvent event) {
         if (entityStates.isNew(getEditedEntity())) {
             getEditedEntity().setPassword(passwordEncoder.encode(passwordField.getValue()));
+
+            newEntity = true;
+        }
+    }
+
+    @Subscribe
+    public void onAfterSave(final AfterSaveEvent event) {
+        if (newEntity) {
+            notifications.create(messageBundle.getMessage("noAssignedRolesNotification"))
+                    .withThemeVariant(NotificationVariant.LUMO_WARNING)
+                    .withPosition(Notification.Position.TOP_END)
+                    .show();
+
+            newEntity = false;
         }
     }
 }

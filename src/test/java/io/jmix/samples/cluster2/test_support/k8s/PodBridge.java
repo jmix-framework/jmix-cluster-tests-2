@@ -1,6 +1,6 @@
 package io.jmix.samples.cluster2.test_support.k8s;
 
-import javax.annotation.Nullable;
+import org.springframework.lang.Nullable;
 
 public interface PodBridge {
     String getName();

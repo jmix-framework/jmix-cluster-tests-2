@@ -1,7 +1,7 @@
 plugins {
+    id 'io.jmix' version '3.0.999-SNAPSHOT'
     id 'java'
-    id 'io.jmix' version '2.8.+'
-    id 'org.springframework.boot' version '3.5.14'
+    id 'org.jetbrains.gradle.plugin.idea-ext' version '1.1.9'
 }
 
 apply plugin: 'org.springframework.boot'
@@ -57,6 +57,7 @@ dependencies {
     implementation 'io.jmix.flowui:jmix-flowui-kit'
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'com.vaadin:vaadin-dev'
 
     implementation 'com.hazelcast:hazelcast'
 
@@ -86,6 +87,12 @@ dependencies {
     implementation 'io.rest-assured:rest-assured'
 }
 
+configurations.implementation {
+    exclude group: 'com.vaadin', module: 'hilla'
+    exclude group: 'com.vaadin', module: 'hilla-dev'
+    exclude group: 'com.vaadin', module: 'copilot'
+}
+
 test {
     useJUnitPlatform()
     systemProperty 'testBeanName', System.getProperty('testBeanName')
@@ -109,6 +116,14 @@ bootBuildImage {
     imageName = 'docker.haulmont.com/platform/jmix-kube-tests/sample-cluster:jmix_2_0'
 }
 
+idea {
+    module {
+        excludeDirs.addAll(files '.jmix', 'node_modules', 'src/main/frontend/generated/', 'src/main/bundles')
+    }
+}
+
 vaadin {
-    productionMode = true
+    optimizeBundle = false
+    productionMode = false
+    reactEnable = false
 }
