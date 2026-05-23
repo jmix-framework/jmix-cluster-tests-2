@@ -34,6 +34,12 @@ spec:
               value: sample
             - name: SPRING_PROFILES_ACTIVE
               value: k8s
+            - name: JMIX_CORE_CONF_DIR
+              value: /tmp/.jmix/conf
+            - name: JMIX_CORE_WORK_DIR
+              value: /tmp/.jmix/work
+            - name: JMIX_CORE_TEMP_DIR
+              value: /tmp/.jmix/temp
             - name: HZ_NETWORK_JOIN_KUBERNETES_ENABLED
               value: "true"
             - name: BPL_DEBUG_ENABLED
@@ -47,7 +53,6 @@ spec:
               exec:
                 command: [ "sh", "-c", "sleep 10" ]
           ports:
-            # todo make sure hazelcast is first (lexicographically too) because of https://github.com/hazelcast/hazelcast/issues/24688, revert when fix will be released
             - name: hazelcast
               containerPort: 5701
             - name: web-ui

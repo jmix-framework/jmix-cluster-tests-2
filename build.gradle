@@ -57,6 +57,7 @@ dependencies {
     implementation 'io.jmix.flowui:jmix-flowui-kit'
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-hazelcast'
     implementation 'com.vaadin:vaadin-dev'
 
     implementation 'com.hazelcast:hazelcast'
@@ -80,7 +81,7 @@ dependencies {
     implementation 'org.assertj:assertj-core'
 
     implementation 'io.jmix.sessions:jmix-sessions-starter'
-    implementation 'org.springframework.session:spring-session-hazelcast'
+    implementation 'com.hazelcast.spring:hazelcast-spring-session:4.0.0'
     implementation 'io.jmix.rest:jmix-rest-starter'
     implementation 'io.jmix.authserver:jmix-authserver-starter'
 
@@ -123,7 +124,5 @@ idea {
 }
 
 vaadin {
-    optimizeBundle = false
-    productionMode = false
-    reactEnable = false
+    productionMode = true
 }

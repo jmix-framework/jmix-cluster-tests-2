@@ -75,7 +75,7 @@ public class SampleCluster2Application implements AppShellConfigurator {
     @EventListener
     public void printAppDetails(final ApplicationStartedEvent event) {
         LoggerFactory.getLogger(SampleCluster2Application.class)
-                .info("{} ({})", buildProperties.getName(),
+                .info("{} (Built at {})", buildProperties.getName(),
                         ZonedDateTime.ofInstant(buildProperties.getTime(), TimeZone.getDefault().toZoneId()));
     }
 

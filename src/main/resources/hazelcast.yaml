@@ -1,4 +1,9 @@
 hazelcast:
+  serialization:
+    compact-serialization:
+      serializers:
+        - serializer: com.hazelcast.spring.session.HazelcastSessionCompactSerializer
+        - serializer: com.hazelcast.spring.session.AttributeValueCompactSerializer
   network:
     join:
       multicast:
