@@ -31,7 +31,7 @@ public class SynchronizedListAppender extends AppenderBase<ILoggingEvent> {
     @Override
     protected void append(ILoggingEvent eventObject) {
         messages.add(String.format("%s [%s] %s - %s",
-                new SimpleDateFormat("HH:mm:ss.SSS").format(new Date(eventObject.getTimeStamp())),//todo thread safety/optimisation
+                new SimpleDateFormat("HH:mm:ss.SSS").format(new Date(eventObject.getTimeStamp())),
                 eventObject.getThreadName(),
                 eventObject.getLoggerName(),
                 eventObject));

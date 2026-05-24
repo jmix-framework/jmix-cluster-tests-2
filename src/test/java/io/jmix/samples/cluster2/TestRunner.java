@@ -25,6 +25,7 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 
 public class TestRunner {
@@ -302,9 +303,11 @@ public class TestRunner {
     }
 
 
-    //@Test
+    @Test
     void singleClusterTest() throws Throwable {
         String testBeanName = System.getProperty("testBeanName");
+        assumeTrue(testBeanName != null && !testBeanName.isBlank(), "testBeanName is not set");
+
         List<TestInfo> testInfos = loadTests()
                 .filter(info -> info.getBeanName().equals(testBeanName))
                 .collect(Collectors.toList());

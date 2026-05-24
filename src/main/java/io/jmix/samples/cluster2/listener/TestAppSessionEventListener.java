@@ -20,7 +20,6 @@ import java.util.List;
 public class TestAppSessionEventListener {
 
     private final Logger log = LoggerFactory.getLogger(TestAppSessionEventListener.class);
-    //todo synchronized with another option
     private List<JmixSessionCreatedEvent<?>> jmixCreatedEvents = Collections.synchronizedList(new ArrayList<>());
     private List<HttpSessionCreatedEvent> httpSessionCreatedEvents = Collections.synchronizedList(new ArrayList<>());
     private List<SessionCreatedEvent> sessionCreatedEvents = Collections.synchronizedList(new ArrayList<>());

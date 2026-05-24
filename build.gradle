@@ -45,8 +45,8 @@ dependencies {
     implementation 'io.jmix.pessimisticlock:jmix-pessimisticlock-starter'
     implementation 'io.jmix.pessimisticlock:jmix-pessimisticlock-flowui-starter'
 
-    //implementation 'io.jmix.notifications:jmix-notifications-starter'//todo notifications
-    //implementation 'io.jmix.notifications:jmix-notifications-flowui-starter'
+    implementation 'io.jmix.notifications:jmix-notifications-starter'
+    implementation 'io.jmix.notifications:jmix-notifications-flowui-starter'
 
     implementation 'io.jmix.audit:jmix-audit-starter'
     implementation 'io.jmix.audit:jmix-audit-flowui-starter'
