@@ -2,6 +2,7 @@ package io.jmix.samples.cluster2.test_system.model.annotations;
 
 import java.lang.annotation.*;
 
+//possible improvement:app-properties substitution during the test (may be achieved through env variables)
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
@@ -14,8 +15,4 @@ public @interface ClusterTest {
     String[] initNodes() default ALL_NODES;
 
     String description() default "";
-
-    //todo loggers config/filter
-    //todo enabled or ignore
-    //todo app-properties substitution by test (with full rescaling[restarting] of pods)
 }

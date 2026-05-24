@@ -65,12 +65,6 @@ public class SampleCluster2Application implements AppShellConfigurator {
         return bean;
     }
 
-    /*@Bean //todo notificatons
-    @Primary
-    UserSessionNotifier testingUserSessionNotifier() {
-        return new CollectingUserSessionNotifier();
-    }
-*/
 
     @EventListener
     public void printAppDetails(final ApplicationStartedEvent event) {
@@ -79,11 +73,4 @@ public class SampleCluster2Application implements AppShellConfigurator {
                         ZonedDateTime.ofInstant(buildProperties.getTime(), TimeZone.getDefault().toZoneId()));
     }
 
-/*    @PostConstruct //todo notificatoins
-    public void postConstruct() {
-        notificationTypesRepository.registerTypes(
-                new NotificationType("info", "INFO_CIRCLE"),
-                new NotificationType("warn", "WARNING")
-        );
-    }*/
 }

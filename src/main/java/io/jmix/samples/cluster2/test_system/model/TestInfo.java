@@ -8,12 +8,11 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.*;
 
-public class TestInfo implements Serializable {//todo immutability
+public class TestInfo implements Serializable {
 
     @Serial
     private static final long serialVersionUID = -8002207034814424879L;
 
-    //todo group to resources
     private Set<String> podNames = new HashSet<>();
 
     private String beanName;
@@ -91,7 +90,7 @@ public class TestInfo implements Serializable {//todo immutability
     }
 
     @Override
-    public boolean equals(Object o) {//todo check
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof TestInfo)) return false;
         TestInfo testInfo = (TestInfo) o;
@@ -99,7 +98,7 @@ public class TestInfo implements Serializable {//todo immutability
     }
 
     @Override
-    public int hashCode() { //todo check
+    public int hashCode() {
         return Objects.hash(podNames, beanName, steps, description, initNodes);
     }
 

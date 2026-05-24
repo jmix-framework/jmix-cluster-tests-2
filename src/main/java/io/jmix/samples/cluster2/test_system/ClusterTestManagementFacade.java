@@ -38,7 +38,7 @@ public class ClusterTestManagementFacade implements BeanPostProcessor, Initializ
 
     private BeanFactory beanFactory;
 
-    private List<TestInfo> testInfos = new LinkedList<>();//todo immutability
+    private List<TestInfo> testInfos = new LinkedList<>();
 
     private Map<String, ClusterTestImpl> testsByNames = new HashMap<>();
 
@@ -52,7 +52,7 @@ public class ClusterTestManagementFacade implements BeanPostProcessor, Initializ
         appender = new SynchronizedListAppender();
 
         LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
-        context.getLogger("io.jmix").addAppender(appender);//todo setup through .properties
+        context.getLogger("io.jmix").addAppender(appender);
         context.getLogger("org.eclipselink").addAppender(appender);
         context.getLogger("org.eclipse").addAppender(appender);
         context.getLogger("eclipselink").addAppender(appender);
@@ -115,7 +115,7 @@ public class ClusterTestManagementFacade implements BeanPostProcessor, Initializ
     })
     public TestResult runBeforeTestAction(String beanName, TestContext context) {
         TestResult result = new TestResult();
-        ClusterTestImpl impl = testsByNames.get(beanName);//todo deal with code duplication
+        ClusterTestImpl impl = testsByNames.get(beanName);
         appender.start();
         try {
             if (impl.getBeforeTest() != null) {
@@ -149,7 +149,7 @@ public class ClusterTestManagementFacade implements BeanPostProcessor, Initializ
         try {
             if (impl.getAfterTest() != null) {
                 impl.getAfterTest().doAction(context);
-            } else {//todo! check on runner instead!
+            } else {
                 log.info("No AfterTest action found for test '{}'", beanName);
             }
         } catch (TestStepException e) {
@@ -191,13 +191,13 @@ public class ClusterTestManagementFacade implements BeanPostProcessor, Initializ
         TestAfterAction afterStepAction = null;
         TestAction beforeTestAction = null;
         TestAfterAction afterTestAction = null;
-        boolean alwaysRunAfterTestAction = false;//todo refactor better? (add also info about existence of after-/before-Test in TestInfo)
+        boolean alwaysRunAfterTestAction = false;
 
         for (Method method : ReflectionUtils.getDeclaredMethods(targetBean.getClass())) {
             processStepAnnotation(targetBean, beanName, method, steps, actions);
             processControlAnnotations(method, steps);
 
-            TestAction beforeStepActionCandidate = processAnnotatedMethod(beanName, method, BeforeStep.class, beforeStepAction != null);//todo make ClusterTestImpl sealable and move exception to setter?
+            TestAction beforeStepActionCandidate = processAnnotatedMethod(beanName, method, BeforeStep.class, beforeStepAction != null);
             if (beforeStepActionCandidate != null) {
                 beforeStepAction = beforeStepActionCandidate;
             }
@@ -243,7 +243,7 @@ public class ClusterTestManagementFacade implements BeanPostProcessor, Initializ
             TestAction action = createStepAction(beanName, method);
             steps.add(new PodStep(stepAnnotation.order(), stepAnnotation.nodes()));
             TestAction previousAction = actions.put(stepAnnotation.order(), action);
-            if (previousAction != null) {//todo just skip this test and log? or stop app (as now)?
+            if (previousAction != null) {
                 throw new DevelopmentException(
                         String.format("More than on test step with order %s found for test %s",
                                 stepAnnotation.order(),
@@ -285,7 +285,7 @@ public class ClusterTestManagementFacade implements BeanPostProcessor, Initializ
             try {
                 List<Object> argList = new LinkedList<>();
                 for (Class<?> clazz : method.getParameterTypes()) {
-                    if (clazz.isAssignableFrom(TestContext.class)) {//todo extensibility
+                    if (clazz.isAssignableFrom(TestContext.class)) {
                         argList.add(context);
                     } else {
                         argList.add(null);
@@ -293,9 +293,9 @@ public class ClusterTestManagementFacade implements BeanPostProcessor, Initializ
                 }
                 method.invoke(beanFactory.getBean(beanName), argList.toArray());
             } catch (IllegalAccessException e) {
-                throw new RuntimeException(e);//todo correct error processing and returning of result
+                throw new RuntimeException(e);
             } catch (InvocationTargetException e) {
-                if (e.getTargetException() != null) {//todo recheck, does it used at all
+                if (e.getTargetException() != null) {
                     throw new TestStepException(e.getTargetException());
                 } else {
                     throw new RuntimeException(e);

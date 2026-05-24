@@ -103,8 +103,7 @@ public class TestRunner {
         }
     }
 
-    public static void waitAppsReady(List<PodBridge> bridges) {//todo refactor
-        //todo async?
+    public static void waitAppsReady(List<PodBridge> bridges) {
         for (PodBridge bridge : bridges) {
             log.info("Waiting port '{}' for pod '{}'...", bridge.getJmxPort(), bridge.getName());
             boolean sucess = false;
@@ -137,7 +136,7 @@ public class TestRunner {
                         Thread.sleep(APP_STARTUP_CHECK_PERIOD_SEC * 1000);
                     }
                 } catch (InterruptedException e) {
-                    throw new RuntimeException("Error during waiting app check period", e);//todo another message
+                    throw new RuntimeException("Error during waiting app check period", e);
                 }
             }
             log.info("App on pod {} accessible. Waiting time: {} seconds",
@@ -159,7 +158,6 @@ public class TestRunner {
             if (info.isCleanStart()) {
                 log.info("Clean start required. Stopping all pods.");
                 k8s.scalePods(0);
-                //todo restart db pod too?
             }
 
             log.info("Init nodes {}", info.getInitNodes());
@@ -241,7 +239,7 @@ public class TestRunner {
                         case ADD:
                             for (String nodName : controlStep.getNodeNames()) {
                                 if (testContext.getNodeNames().contains(nodName)) {
-                                    throw new DevelopmentException("Pod with name '" + nodName + "' has been already created");//todo ?!
+                                    throw new DevelopmentException("Pod with name '" + nodName + "' has been already created");
                                 }
                                 k8s.scalePods(k8s.getPodCount() + 1);
                                 List<PodBridge> bridges = k8s.getPodBridges();
