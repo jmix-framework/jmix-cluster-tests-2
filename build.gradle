@@ -112,7 +112,7 @@ afterEvaluate {
 }
 
 bootBuildImage {
-    println "Jmix verison: ${project.hasProperty("jmixVersion") ? jmixVersion : defaultJmixVersion + ' (default)'}"
+    println "Jmix version: ${project.hasProperty("jmixVersion") ? jmixVersion : defaultJmixVersion + ' (default)'}"
     imageName = 'docker.haulmont.com/platform/jmix-kube-tests/sample-cluster:jmix_2_0'
     cleanCache = true
 }

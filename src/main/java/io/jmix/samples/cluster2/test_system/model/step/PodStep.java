@@ -34,7 +34,7 @@ public class PodStep extends AbstractTestStep {
 
     @Override
     public int hashCode() {
-        return Objects.hash(nodes);
+        return Objects.hash(nodes, order);
     }
 
     @Override
