@@ -2,6 +2,7 @@
 
 .gradle
 build/
+.remote_cluster_tmp.*/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**
 !**/src/test/**

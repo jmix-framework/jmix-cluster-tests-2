@@ -29,7 +29,6 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 
 public class TestRunner {
-    public static final String TEST_SIZE_ATTRIBUTE = "Size";
     public static final String READY_ATTRIBUTE = "Ready";
 
     public static final String TEST_LIST_ATTRIBUTE = "Tests";
@@ -41,7 +40,25 @@ public class TestRunner {
     public static final int APP_STARTUP_CHECK_PERIOD_SEC = 10;
     private static final Logger log = LoggerFactory.getLogger(TestRunner.class);
 
+    /**
+     * Controls which kubeconfig source the test runner uses.
+     * <p>
+     * If {@code false}, the runner uses {@code KUBECONFIG_CONTENT} when it is set;
+     * otherwise it falls back to the local kubeconfig. Set to {@code true} only when
+     * tests must ignore {@code KUBECONFIG_CONTENT} and use the local kubeconfig
+     * explicitly, for example for a minikube run while the env variable is still set.
+     * An incorrect value makes tests use the wrong
+     * cluster.
+     */
     public static final boolean localClusterMode = false;
+
+    /**
+     * Enables debug port-forwarding for application pods.
+     * <p>
+     * When {@code true}, pod debug port {@code 5006} is forwarded to local ports
+     * starting from {@code 50001}. The default {@code false} is the normal test
+     * mode; enable this only for manual debugging.
+     */
     public static final boolean debugPods = false;
 
 
