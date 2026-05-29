@@ -11,8 +11,9 @@ They run inside Kubernetes pods and are invoked through JMX.
 running pods through JMX and executes cluster test beans by name.
 
 Kubernetes manifests live under `k8s/`.
-For local development, minikube cluster lifecycle is handled by
-`minikube_cluster.sh`.
+For local development on Rancher Desktop, build + deploy is handled by
+`rancher_cluster.sh`. The `minikube_cluster.sh` is also available for
+the minikube flow.
 
 ## Development Rules
 
@@ -30,7 +31,13 @@ Run the compile check with:
 ```
 
 If changed code runs inside the cluster application, reload the local cluster
-before validating behavior:
+before validating behavior. For Rancher Desktop:
+
+```bash
+./rancher_cluster.sh
+```
+
+For minikube:
 
 ```bash
 ./minikube_cluster.sh --reload

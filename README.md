@@ -10,6 +10,12 @@ Common:
 - Docker
 - kubectl
 
+Rancher Desktop:
+
+- Rancher Desktop installed and running with Kubernetes enabled
+- Container engine: `dockerd (moby)` so locally built images are shared with k3s
+- `rancher-desktop` kubectl context available
+
 Minikube:
 
 - minikube with `qemu2` driver
@@ -19,6 +25,38 @@ Remote cluster:
 
 - `KUBECONFIG_CONTENT` contains the remote kubeconfig file content
 - `kubetestcred` exists in `jmix-cluster-tests`
+
+## Rancher Desktop
+
+Before tests, make sure `TestRunner.localClusterMode` is `true`.
+
+Make sure Rancher Desktop is running and the `rancher-desktop` kubectl context exists. Then build the app image and deploy:
+
+```bash
+./rancher_cluster.sh
+```
+
+The script does NOT push to the registry by default — k3s pulls the freshly built image directly from the shared local Docker daemon, and the deployment's
+`imagePullPolicy` is patched to `IfNotPresent` at deploy time.
+
+Rebuild and redeploy only (skip namespace/manifests re-apply):
+
+```bash
+./rancher_cluster.sh --skip-deploy
+```
+
+Run tests:
+
+```bash
+./gradlew test --tests io.jmix.samples.cluster2.TestRunner.clusterTests
+```
+
+Cleanup cluster:
+
+```bash
+kubectl delete -f ./k8s --namespace=jmix-cluster-tests --ignore-not-found=true
+kubectl delete namespace jmix-cluster-tests
+```
 
 ## Minikube
 
@@ -45,7 +83,7 @@ Run tests:
 ## Remote cluster
 
 Make sure `TestRunner.localClusterMode` is `false`.
-<p>
+
 Put the remote kubeconfig file content into `KUBECONFIG_CONTENT`, then run:
 
 ```bash
